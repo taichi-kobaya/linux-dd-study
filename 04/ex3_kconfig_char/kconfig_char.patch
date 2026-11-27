@@ -1,0 +1,12 @@
+# hello/のMakefile,main.c,sub.cは、
+# WSL2-Linux-Kernel/drivers/char配下にhello/を作成し、配置
+
+
+# WSL2-Linux-Kernel/drivers/char/Makefileの末尾に追加
+obj-$(CONFIG_HELLO)		+= hello/
+
+# WSL2-Linux-Kernel/drivers/char/Kconfigのendmenu直前に追加
+config HELLO
+	tristate "hello driver"
+	help
+		this is a sample driver.
