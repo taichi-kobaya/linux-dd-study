@@ -4,6 +4,7 @@
 
 ## ディレクトリ構成
 
+```text
 ex3_kconfig_char/
 ├── hello/
 │   ├── Makefile       # hello-objs := main.o sub.o で複合モジュール化
@@ -11,6 +12,7 @@ ex3_kconfig_char/
 │   └── sub.c          # printk で呼び出し元関数名を出力
 ├── kconfig_char.patch # drivers/char/Kconfig と drivers/char/Makefile の差分
 └── README.md
+```
 
 ## カーネル側への配置・変更内容
 
@@ -24,23 +26,29 @@ ex3_kconfig_char/
 
 カーネルソースのルートディレクトリで実行する（`drivers/char` や `hello` 配下ではなくルートで実行するのがポイント）。
 
+```bash
 cd ~/kernel-src/WSL2-Linux-Kernel
 make menuconfig
+```
 
 - `Device Drivers` → `Character devices` → `hello driver` で `<M>` を選択し、Save して終了。
 
 ### 2. モジュールビルド
 
+```bash
 cd ~/kernel-src/WSL2-Linux-Kernel
 make -j$(nproc) M=drivers/char/hello modules
+```
 
 ### 3. 動作確認（`insmod` / `dmesg` / `lsmod` / `rmmod`）
 
+```bash
 sudo insmod drivers/char/hello/hello.ko
 dmesg | tail -n 10
 lsmod | grep hello
 sudo rmmod hello
 dmesg | tail -n 10
+```
 
 ## ハマりどころと解決メモ
 
